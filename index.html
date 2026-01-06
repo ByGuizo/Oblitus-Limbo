@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
     <style>
-        /* --- PALETA VÍVIDA & DETALHES --- */
+        /* --- PALETA VÍVIDA & CONFIGURAÇÕES --- */
         :root {
             --bg: #000000;
             --text: #ffffff;
@@ -54,20 +54,6 @@
             opacity: 0.08; pointer-events: none; z-index: 101; mix-blend-mode: overlay;
         }
 
-        /* ESTILO PARA IMAGENS VAZIAS (#) */
-        img[src="#"] {
-            background-color: #1a1a1a;
-            border: 1px dashed #333;
-            min-height: 100%; width: 100%; display: block;
-            position: relative;
-        }
-        img[src="#"]::after {
-            content: 'INSIRA A IMAGEM';
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            color: #555; font-size: 0.8rem; letter-spacing: 2px; width: 100%; text-align: center;
-        }
-
         /* --- CURSOR --- */
         .cursor-dot {
             position: fixed; top: 0; left: 0; width: 8px; height: 8px;
@@ -98,7 +84,6 @@
         .logo {
             font-family: var(--font-display); font-size: 1.5rem; font-weight: 900;
             letter-spacing: 3px; text-transform: uppercase; color: var(--platinum);
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
         .logo span { color: var(--accent); }
 
@@ -108,12 +93,8 @@
             cursor: pointer; color: var(--platinum);
         }
         .lines { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
-        .lines span { 
-            width: 30px; height: 2px; background: var(--platinum); 
-            transition: 0.4s var(--easing); box-shadow: 0 0 5px rgba(255,255,255,0.3);
-        }
-        .menu-trigger:hover .lines span { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-        .menu-trigger:hover .lines span:nth-child(1) { width: 40px; }
+        .lines span { width: 30px; height: 2px; background: var(--platinum); transition: 0.4s var(--easing); }
+        .menu-trigger:hover .lines span { background: var(--accent); }
 
         /* Fullscreen Menu */
         .nav-overlay {
@@ -121,437 +102,137 @@
             background: #020202; z-index: 800;
             transform: translateY(-100%); transition: transform 1s var(--easing);
             display: flex; justify-content: center; align-items: center;
-            background-image: radial-gradient(circle at center, #110000 0%, #000 70%);
         }
         .nav-overlay.active { transform: translateY(0); }
         .nav-list { list-style: none; text-align: center; }
         .nav-link {
             display: block; font-family: var(--font-display); font-size: 4rem;
             color: transparent; -webkit-text-stroke: 1px var(--text-muted);
-            text-decoration: none; text-transform: uppercase;
-            transform: translateY(100%); transition: 0.3s;
-            font-weight: 900;
+            text-decoration: none; text-transform: uppercase; font-weight: 900;
         }
-        .nav-overlay.active .nav-link { animation: slideUp 0.8s var(--easing) forwards; }
         .nav-link:hover { color: var(--accent); -webkit-text-stroke: 0; text-shadow: 0 0 20px var(--accent); }
-        @keyframes slideUp { to { transform: translateY(0); } }
 
         /* --- HERO --- */
         .hero {
             height: 100vh; width: 100%; position: relative;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            overflow: hidden;
         }
-        
         .hero-bg {
-            position: absolute; top: -10%; left: -10%; width: 120%; height: 120%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: url('imgs/IMG_20260105_134513.png') center/cover no-repeat; 
-            filter: grayscale(70%) brightness(0.3) contrast(1.5);
-            z-index: -2;
+            filter: grayscale(70%) brightness(0.3); z-index: -2;
         }
-        .hero::after {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at center, rgba(255, 42, 42, 0.1) 0%, transparent 60%);
-            z-index: -1;
-        }
-
-        .hero-title {
-            font-family: var(--font-display); font-size: 11vw; line-height: 0.8;
-            text-transform: uppercase; text-align: center;
-            justify-content: center;
-            font-weight: 900;
-        }
-        .outline-text {
-            color: transparent; -webkit-text-stroke: 2px var(--platinum);
-            text-shadow: 0 0 15px rgba(255,255,255,0.2);
-        }
-        .filled-text {
-            color: var(--accent);
-            text-shadow: 0 0 30px var(--accent-glow), 0 0 10px var(--accent);
-        }
-
-        .hero-title .line { overflow: hidden; display: block; }
-        .hero-title span { display: block; transform: translateY(100%); }
-
-        .hero-subtitle {
-            margin-top: 50px; font-family: var(--font-body); font-size: 1.2rem;
-            letter-spacing: 6px; color: var(--platinum); text-transform: uppercase;
-            opacity: 0; transform: translateY(20px);
-            border-top: 1px solid var(--accent); padding-top: 20px;
-        }
+        .hero-title { font-family: var(--font-display); font-size: 11vw; line-height: 0.8; text-transform: uppercase; text-align: center; }
+        .outline-text { color: transparent; -webkit-text-stroke: 2px var(--platinum); }
+        .filled-text { color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); }
+        .hero-subtitle { margin-top: 50px; letter-spacing: 6px; color: var(--platinum); text-transform: uppercase; border-top: 1px solid var(--accent); padding-top: 20px; }
 
         /* --- MARQUEE --- */
-        .marquee {
-            padding: 25px 0; 
-            border-top: 1px solid #222; border-bottom: 1px solid #222;
-            background: #050505; overflow: hidden; white-space: nowrap;
-            position: relative;
-        }
-        .marquee::before, .marquee::after {
-            content: ''; position: absolute; left: 0; width: 100%; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            opacity: 0.5;
-        }
-        .marquee::before { top: 0; } .marquee::after { bottom: 0; }
-
+        .marquee { padding: 25px 0; background: #050505; overflow: hidden; white-space: nowrap; border-top: 1px solid #222; border-bottom: 1px solid #222; }
         .marquee-inner { display: inline-block; animation: scroll 25s linear infinite; }
-        .marquee span {
-            font-family: var(--font-display); font-size: 1.2rem; margin: 0 50px; 
-            color: var(--text-muted); font-weight: 700; letter-spacing: 2px;
-        }
-        .marquee span.highlight { color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); }
+        .marquee span { font-family: var(--font-display); font-size: 1.2rem; margin: 0 50px; color: var(--text-muted); }
+        .marquee span.highlight { color: var(--accent); }
         @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-        /* --- ABOUT (LIVRO FLUTUANTE) --- */
-        .section-about {
-            padding: 200px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
-            align-items: center; position: relative;
-        }
-        .section-about::before {
-            content: '†'; font-family: var(--font-display); font-size: 30rem;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: #111; z-index: -1; opacity: 0.5;
-        }
+        /* --- ABOUT --- */
+        .section-about { padding: 200px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+        .book-img { width: 80%; max-width: 500px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8)); transition: transform 0.1s; }
+        .about-text p { font-family: var(--font-display); font-size: 2.2rem; line-height: 1.3; color: var(--text-muted); }
+        .about-text strong { color: var(--platinum); }
 
-        .image-reveal {
-            position: relative;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px; 
-        }
-        
-        .book-img {
-            width: 80%; 
-            max-width: 500px;
-            height: auto;
-            object-fit: contain; 
-            transition: transform 0.1s;
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8)); 
-        }
-        
-        .book-img[src="#"] {
-            height: 600px;
-            background: #111;
-        }
-
-        .about-text p {
-            font-family: var(--font-display); font-size: 2.2rem; line-height: 1.3; color: var(--text-muted);
-        }
-        .about-text strong { color: var(--platinum); font-weight: 400; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
-
-        /* --- CHARACTERS --- */
+        /* --- NOVA SEÇÃO REGISTRO DE ALMAS (GRID VERTICAL) --- */
         .section-chars {
-            height: 100vh; overflow: hidden; background: #030303;
-            display: flex; align-items: center; border-top: 1px solid #111;
+            padding: 150px 10%;
+            background-color: #030303;
+            border-top: 1px solid #111;
+            position: relative;
         }
-        
-        .char-wrapper {
-            display: flex; gap: 80px; padding-left: 10vw; padding-right: 10vw;
+        .chars-header { text-align: center; margin-bottom: 100px; }
+        .chars-title {
+            font-family: var(--font-display); font-size: 5rem; color: var(--platinum);
+            line-height: 0.8; font-weight: 900; margin-bottom: 20px;
+        }
+        .chars-title span { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
+        .chars-description { font-size: 0.9rem; letter-spacing: 3px; color: #555; text-transform: uppercase; }
+
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .char-card {
-            min-width: 450px; height: 65vh; position: relative;
-            display: flex; flex-direction: column; justify-content: flex-end;
-            padding: 40px; transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            background: #0a0a0a; overflow: hidden;
-            border: 1px solid #222;
-            box-shadow: 0 0 0 1px #000 inset;
+            height: 600px;
+            position: relative;
+            background: #080808;
+            overflow: hidden;
+            border: 1px solid #1a1a1a;
+            transition: 0.6s var(--easing);
         }
-
+        .char-card-border {
+            position: absolute; inset: 10px;
+            border: 1px solid rgba(255, 42, 42, 0.1);
+            z-index: 3; pointer-events: none; transition: 0.4s;
+        }
         .char-bg-img {
-            position: absolute; inset: 0; 
+            position: absolute; inset: 0;
             background-size: cover; background-position: center;
-            filter: grayscale(100%) brightness(0.5); transition: 0.5s; z-index: 0;
+            filter: grayscale(100%) brightness(0.4) contrast(1.2);
+            transition: 0.8s var(--easing); z-index: 1;
         }
         .char-card::after {
             content: ''; position: absolute; inset: 0;
-            background: linear-gradient(to top, #000 10%, transparent 90%);
-            z-index: 1;
+            background: linear-gradient(to top, #000 5%, rgba(0,0,0,0) 60%);
+            z-index: 2;
         }
+        .char-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; z-index: 4; }
+        .char-role { font-size: 0.8rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 10px; }
+        .char-name { font-family: var(--font-display); font-size: 2.8rem; font-weight: 900; color: var(--platinum); }
+        .char-status { font-size: 0.65rem; letter-spacing: 4px; color: var(--accent); margin-top: 15px; opacity: 0.6; }
 
-        .char-info { position: relative; z-index: 2; transform: translateY(30px); opacity: 0; transition: 0.5s; }
-        
-        .char-card:hover { 
-            transform: scale(1.03); 
-            border-color: var(--accent);
-            box-shadow: 0 0 30px rgba(255, 42, 42, 0.2), 0 0 0 1px var(--accent) inset; 
-        }
-        .char-card:hover .char-bg-img { filter: grayscale(0%) brightness(0.8); transform: scale(1.1); }
-        .char-card:hover .char-info { transform: translateY(0); opacity: 1; }
-
-        .char-role { 
-            font-family: var(--font-body); font-size: 1rem; color: var(--accent); 
-            text-transform: uppercase; letter-spacing: 3px; margin-bottom: 15px; display: block;
-            text-shadow: 0 0 5px var(--accent-glow);
-        }
-        .char-name { 
-            font-family: var(--font-display); font-size: 3.5rem; line-height: 0.9; 
-            color: var(--platinum); font-weight: 900;
-        }
+        .char-card:hover { border-color: var(--accent); box-shadow: 0 0 40px rgba(255, 42, 42, 0.15); }
+        .char-card:hover .char-bg-img { filter: grayscale(0%) brightness(0.7) scale(1.05); }
+        .char-card:hover .char-card-border { border-color: var(--accent); inset: 15px; }
 
         /* --- HIKARI --- */
-        .section-hikari {
-            padding: 250px 10%; text-align: center; position: relative;
-            background: radial-gradient(circle at center, #0a0000 0%, #000 70%);
-        }
+        .section-hikari { padding: 250px 10%; text-align: center; background: radial-gradient(circle at center, #0a0000 0%, #000 70%); }
         .hikari-text {
-            font-family: var(--font-display); font-size: 4rem; line-height: 1.2;
-            color: #333;
+            font-family: var(--font-display); font-size: 4rem; line-height: 1.2; color: #333;
             background: linear-gradient(to right, var(--platinum) 50%, #333 50%);
             background-size: 200% 100%; background-position: 100% 0;
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .hikari-label {
-            margin-top: 60px; font-family: var(--font-body); font-size: 0.9rem;
-            letter-spacing: 6px; color: var(--accent); text-transform: uppercase;
-            display: inline-block; padding-bottom: 10px;
-            border-bottom: 2px solid var(--accent);
-            box-shadow: 0 5px 15px -5px var(--accent);
-        }
+        .hikari-label { margin-top: 60px; color: var(--accent); letter-spacing: 6px; text-transform: uppercase; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 10px; }
 
-        /* --- CREATOR SECTION (NOVO) --- */
-        .section-creator {
-            padding: 200px 10%;
-            background: #020202;
-            position: relative;
-            overflow: hidden;
-            border-top: 1px solid #111;
-        }
-        /* Texto decorativo de fundo */
-        .section-creator::after {
-            content: 'AUTHOR';
-            position: absolute;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-family: var(--font-display); font-size: 20vw;
-            color: #080808; z-index: 0; font-weight: 900;
-            pointer-events: none;
-        }
-
-        .creator-container {
-            display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px;
-            align-items: center; position: relative; z-index: 2;
-            max-width: 1400px; margin: 0 auto;
-        }
-
-        .creator-img-box {
-            position: relative; height: 600px;
-            border: 1px solid #333;
-            overflow: hidden;
-            transition: 0.5s;
-        }
-        .creator-img-box:hover { border-color: var(--accent); box-shadow: 0 0 30px rgba(255, 42, 42, 0.1); }
-        
-        .creator-img {
-            width: 100%; height: 100%; object-fit: cover;
-            filter: grayscale(100%) contrast(1.1); transition: 0.5s;
-        }
-        .creator-img-box:hover .creator-img { filter: grayscale(0%) contrast(1.1); transform: scale(1.05); }
-
-        .creator-content {
-            padding-left: 20px;
-        }
-        
-        .creator-title {
-            font-family: var(--font-body); font-size: 1rem; color: var(--accent);
-            text-transform: uppercase; letter-spacing: 4px; margin-bottom: 20px;
-            display: flex; align-items: center; gap: 15px;
-        }
-        .creator-title::before { content: ''; width: 40px; height: 2px; background: var(--accent); }
-
-        .creator-name {
-            font-family: var(--font-display); font-size: 5rem; line-height: 0.9;
-            color: var(--platinum); font-weight: 900; margin-bottom: 40px;
-        }
-
-        .creator-bio {
-            font-family: var(--font-body); font-size: 1.1rem; line-height: 1.8;
-            color: var(--text-muted); max-width: 600px;
-        }
+        /* --- CREATOR --- */
+        .section-creator { padding: 200px 10%; position: relative; border-top: 1px solid #111; }
+        .creator-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: center; max-width: 1400px; margin: 0 auto; }
+        .creator-img-box { height: 600px; border: 1px solid #333; overflow: hidden; }
+        .creator-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.5s; }
+        .creator-img-box:hover .creator-img { filter: grayscale(0%); transform: scale(1.05); }
+        .creator-name { font-family: var(--font-display); font-size: 5rem; font-weight: 900; color: var(--platinum); margin-bottom: 30px; }
+        .creator-bio { line-height: 1.8; color: var(--text-muted); font-size: 1.1rem; }
         .creator-bio span { color: #fff; font-weight: 600; }
 
         /* --- FOOTER --- */
-        footer {
-            height: 90vh; background: #000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            position: relative; border-top: 1px solid #111;
-            overflow: hidden;
-        }
-        footer::before {
-            content: ''; position: absolute; bottom: -20%; left: 50%; transform: translateX(-50%);
-            width: 60%; height: 40%; background: var(--accent); filter: blur(150px); opacity: 0.2;
-        }
-        
-        .footer-cta {
-            font-family: var(--font-display); font-size: 9vw; color: transparent;
-            -webkit-text-stroke: 2px var(--text-muted); text-transform: uppercase;
-            transition: 0.5s; cursor: pointer; font-weight: 900;
-        }
-        .footer-cta:hover { 
-            color: var(--accent); -webkit-text-stroke: 0; 
-            text-shadow: 0 0 50px var(--accent-glow), 0 0 20px var(--accent);
-        }
+        footer { height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; border-top: 1px solid #111; }
+        .footer-cta { font-family: var(--font-display); font-size: 9vw; -webkit-text-stroke: 2px var(--text-muted); color: transparent; text-transform: uppercase; font-weight: 900; transition: 0.5s; }
+        .footer-cta:hover { color: var(--accent); -webkit-text-stroke: 0; text-shadow: 0 0 50px var(--accent-glow); }
+        .btn-invest { margin-top: -30px; padding: 25px 70px; background: transparent; border: 2px solid var(--platinum); color: var(--platinum); font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: 0.4s; }
+        .btn-invest:hover { background: var(--accent); border-color: var(--accent); color: #000; }
 
-        .btn-invest {
-            margin-top: -30px; padding: 25px 70px;
-            background: transparent; border: 2px solid var(--platinum);
-            color: var(--platinum); font-family: var(--font-body); 
-            text-transform: uppercase; letter-spacing: 3px; font-weight: 700;
-            position: relative; overflow: hidden; z-index: 2; transition: 0.4s;
-            box-shadow: 0 0 20px rgba(255,255,255,0.1);
-        }
-        .btn-invest:hover { 
-            background: var(--accent); border-color: var(--accent); color: #000;
-            box-shadow: 0 0 50px var(--accent-glow);
-        }
-
+        /* Responsividade */
         @media (max-width: 768px) {
-            .hero-title { font-size: 16vw; }
-            .section-about, .creator-container { grid-template-columns: 1fr; padding: 150px 5%; gap: 50px; }
-            .char-card { min-width: 85vw; height: 60vh; }
-            .hikari-text { font-size: 2.5rem; }
+            .hero-title { font-size: 18vw; }
+            .section-about, .creator-container { grid-template-columns: 1fr; gap: 50px; }
+            .chars-title { font-size: 3.5rem; }
+            .hikari-text { font-size: 2rem; }
             .creator-name { font-size: 3rem; }
-            .creator-img-box { height: 400px; }
+            .cursor-dot, .cursor-circle { display: none; }
+            * { cursor: auto !important; }
         }
-        /* ===================== MOBILE FIX REAL ===================== */
-@media (hover: none) and (pointer: coarse) {
-    * {
-        cursor: auto !important;
-    }
-
-    .cursor-dot,
-    .cursor-circle {
-        display: none !important;
-    }
-}
-
-@media (max-width: 768px) {
-
-    /* HEADER */
-    header {
-        padding: 18px 20px;
-    }
-
-    .logo {
-        font-size: 1.2rem;
-        letter-spacing: 2px;
-    }
-
-    .menu-trigger {
-        font-size: 0.8rem;
-        gap: 10px;
-    }
-
-    /* MENU */
-    .nav-link {
-        font-size: 2.5rem;
-        -webkit-text-stroke: 1px var(--text-muted);
-    }
-
-    /* HERO */
-    .hero {
-        padding: 0 6%;
-    }
-
-    .hero-title {
-        font-size: 18vw;
-        line-height: 0.9;
-    }
-
-    .hero-subtitle {
-        font-size: 0.75rem;
-        letter-spacing: 3px;
-        margin-top: 30px;
-    }
-
-    /* ABOUT */
-    .section-about {
-        grid-template-columns: 1fr;
-        padding: 140px 6%;
-        gap: 60px;
-    }
-
-    .about-text p {
-        font-size: 1.4rem;
-        line-height: 1.5;
-    }
-
-    .book-img {
-        width: 100%;
-        max-width: 320px;
-    }
-
-    /* CHARACTERS — DESLIGA HORIZONTAL */
-    .section-chars {
-        height: auto;
-        padding: 120px 6%;
-        overflow: visible;
-    }
-
-    .char-wrapper {
-        flex-direction: column;
-        gap: 50px;
-        padding: 0;
-        transform: none !important;
-    }
-
-    .char-card {
-        min-width: 100%;
-        height: 60vh;
-    }
-
-    /* HIKARI */
-    .section-hikari {
-        padding: 140px 6%;
-    }
-
-    .hikari-text {
-        font-size: 2rem;
-        line-height: 1.4;
-    }
-
-    .hikari-label {
-        font-size: 0.7rem;
-        letter-spacing: 4px;
-    }
-
-    /* CREATOR */
-    .creator-container {
-        grid-template-columns: 1fr;
-        gap: 60px;
-    }
-
-    .creator-img-box {
-        height: 380px;
-    }
-
-    .creator-name {
-        font-size: 2.8rem;
-    }
-
-    .creator-bio {
-        font-size: 1rem;
-        line-height: 1.7;
-    }
-
-    /* FOOTER */
-    footer {
-        height: auto;
-        padding: 140px 6%;
-    }
-
-    .footer-cta {
-        font-size: 18vw;
-        text-align: center;
-    }
-
-    .btn-invest {
-        padding: 18px 40px;
-        font-size: 0.8rem;
-    }
-}
-
     </style>
 </head>
 <body>
@@ -563,11 +244,11 @@
 
     <div class="nav-overlay">
         <ul class="nav-list">
-            <li class="nav-item"><a href="#hero" class="nav-link hover-trigger">Início</a></li>
-            <li class="nav-item"><a href="#about" class="nav-link hover-trigger">Sobre</a></li>
-            <li class="nav-item"><a href="#chars" class="nav-link hover-trigger">Wiki</a></li>
-            <li class="nav-item"><a href="#creator" class="nav-link hover-trigger">Autor</a></li>
-            <li class="nav-item"><a href="#invest" class="nav-link hover-trigger">Apoie</a></li>
+            <li><a href="#hero" class="nav-link hover-trigger">Início</a></li>
+            <li><a href="#about" class="nav-link hover-trigger">Sobre</a></li>
+            <li><a href="#chars" class="nav-link hover-trigger">Wiki</a></li>
+            <li><a href="#creator" class="nav-link hover-trigger">Autor</a></li>
+            <li><a href="#invest" class="nav-link hover-trigger">Apoie</a></li>
         </ul>
     </div>
 
@@ -575,31 +256,23 @@
         <div class="logo hover-trigger">Oblitus <span>Limbo</span></div>
         <div class="menu-trigger hover-trigger">
             MENU
-            <div class="lines">
-                <span></span>
-                <span></span>
-            </div>
+            <div class="lines"><span></span><span></span></div>
         </div>
     </header>
 
     <main>
         <section class="hero" id="hero">
             <div class="hero-bg"></div> 
-            
             <h1 class="hero-title">
-                <span class="line"><span class="outline-text">OBLITUS</span></span>
-                <span class="line"><span class="filled-text">LIMBO</span></span>
+                <span class="outline-text">OBLITUS</span><br>
+                <span class="filled-text">LIMBO</span>
             </h1>
             <div class="hero-subtitle">O Esquecimento é uma Força Ativa</div>
         </section>
 
         <div class="marquee">
             <div class="marquee-inner">
-                <span>MISTÉRIO</span> <span class="highlight">///</span> 
-                <span>HORROR</span> <span class="highlight">///</span> 
-                <span>FANTASIA SOMBRIA</span> <span class="highlight">///</span> 
-                <span>RUÍNAS EMOCIONAIS</span> <span class="highlight">///</span> 
-                <span>SEGREDOS ANTIGOS</span> <span class="highlight">///</span>
+                <span>MISTÉRIO</span> <span class="highlight">///</span> <span>HORROR</span> <span class="highlight">///</span> <span>FANTASIA SOMBRIA</span> <span class="highlight">///</span> <span>RUÍNAS EMOCIONAIS</span> <span class="highlight">///</span> <span>SEGREDOS ANTIGOS</span> <span class="highlight">///</span>
             </div>
         </div>
 
@@ -607,231 +280,125 @@
             <div class="image-reveal">
                 <img src="imgs/mockup livro.png" class="book-img hover-trigger" alt="Livro Mockup">
             </div>
-            <div class="about-text split-reveal">
-                <p>
-                    O universo de <strong>Oblitus Limbo</strong> não entrega respostas fáceis. O mundo se revela aos poucos, através de fragmentos, documentos e <strong style="color: var(--accent);">símbolos antigos</strong>.
-                </p>
-                <br>
-                <p>
-                    Personagens caminham entre ruínas físicas e emocionais, cercados por segredos que insistem em não permanecer enterrados.
-                </p>
+            <div class="about-text">
+                <p>O universo de <strong>Oblitus Limbo</strong> não entrega respostas fáceis. O mundo se revela através de <strong style="color: var(--accent);">símbolos antigos</strong>.</p>
             </div>
         </section>
 
-        <div class="horizontal-container" id="chars">
-            <section class="section-chars">
-                <div class="char-wrapper">
-                    <div style="min-width: 350px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid #222; padding-right: 50px;">
-                        <h2 style="font-family: var(--font-display); font-size: 5rem; color: var(--platinum); line-height: 0.8; font-weight: 900;">REGISTRO<br><span style="color: var(--accent); -webkit-text-stroke: 0;">DE ALMAS</span></h2>
-                    </div>
-
-                    <div class="char-card hover-trigger">
-                        <div class="char-bg-img" style="background-image: url('imgs/Kiana.png');"></div>
-                        <div class="char-info">
-                            <span class="char-role">01 // Protagonista</span>
-                            <h3 class="char-name">KIANA</h3>
-                        </div>
-                    </div>
-
-                    <div class="char-card hover-trigger">
-                        <div class="char-bg-img" style="background-image: url('#');"></div>
-                        <div class="char-info">
-                            <span class="char-role">02 // O Patrulheiro</span>
-                            <h3 class="char-name">AMNON</h3>
-                        </div>
-                    </div>
-
-                    <div class="char-card hover-trigger">
-                         <div class="char-bg-img" style="background-image: url('imgs/Near.png');"></div>
-                        <div class="char-info">
-                            <span class="char-role">03 // O Ladino</span>
-                            <h3 class="char-name">NEAR</h3>
-                        </div>
-                    </div>
-
-                    <div class="char-card hover-trigger">
-                         <div class="char-bg-img" style="background-image: url('imgs/darin.png');"></div>
-                        <div class="char-info">
-                            <span class="char-role">04 // O Druida</span>
-                            <h3 class="char-name">DARIN</h3>
-                        </div>
+        <section class="section-chars" id="chars">
+            <div class="chars-header">
+                <h2 class="chars-title">REGISTRO<br><span>DE ALMAS</span></h2>
+                <p class="chars-description">Fragmentos de memórias recuperados do limbo.</p>
+            </div>
+            <div class="char-grid">
+                <div class="char-card hover-trigger">
+                    <div class="char-bg-img" style="background-image: url('imgs/Kiana.png');"></div>
+                    <div class="char-card-border"></div>
+                    <div class="char-info">
+                        <span class="char-role">01 // Protagonista</span>
+                        <h3 class="char-name">KIANA</h3>
+                        <div class="char-status">STATUS: VÍVIDA</div>
                     </div>
                 </div>
-            </section>
-        </div>
+                <div class="char-card hover-trigger">
+                    <div class="char-bg-img" style="background-image: url('imgs/Amnon.png');"></div>
+                    <div class="char-card-border"></div>
+                    <div class="char-info">
+                        <span class="char-role">02 // O Patrulheiro</span>
+                        <h3 class="char-name">AMNON</h3>
+                        <div class="char-status">STATUS: OBSOLETO</div>
+                    </div>
+                </div>
+                <div class="char-card hover-trigger">
+                    <div class="char-bg-img" style="background-image: url('imgs/Near.png');"></div>
+                    <div class="char-card-border"></div>
+                    <div class="char-info">
+                        <span class="char-role">03 // O Ladino</span>
+                        <h3 class="char-name">NEAR</h3>
+                        <div class="char-status">STATUS: ERRANTE</div>
+                    </div>
+                </div>
+                <div class="char-card hover-trigger">
+                    <div class="char-bg-img" style="background-image: url('imgs/darin.png');"></div>
+                    <div class="char-card-border"></div>
+                    <div class="char-info">
+                        <span class="char-role">04 // O Druida</span>
+                        <h3 class="char-name">DARIN</h3>
+                        <div class="char-status">STATUS: LATENTE</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="section-hikari" id="hikari">
-            <h2 class="hikari-text text-fill-anim">
-                "As janelas altas e estreitas lembravam olhos semicerrados. Mesmo longe do castelo, a arquitetura parecia nos observar."
-            </h2>
+            <h2 class="hikari-text text-fill-anim">"Mesmo longe do castelo, a arquitetura parecia nos observar."</h2>
             <div class="hikari-label">Capítulo IV // Hikari</div>
         </section>
 
         <section class="section-creator" id="creator">
             <div class="creator-container">
                 <div class="creator-img-box hover-trigger">
-                    <img src="imgs/guizo.jpg" alt="Guilherme O. Silva" class="creator-img">
+                    <img src="imgs/guizo.jpg" alt="Autor" class="creator-img">
                 </div>
-                <div class="creator-content gs-reveal-creator">
-                    <div class="creator-title">A MENTE POR TRÁS</div>
+                <div class="creator-content">
                     <h2 class="creator-name">GUILHERME O. SILVA</h2>
-                    <p class="creator-bio">
-                        <span>Guizo</span> é estudante de informática, programação e eletrônica, além de escritor independente e mestre de RPG. Sua escrita é fortemente influenciada por cinema, jogos narrativos e campanhas de RPG focadas em suspense, mistério e desenvolvimento de personagens.
-<br><span>Oblitus Limbo</span> nasce da combinação entre narrativa literária e a experiência de criação de mundos complexos, onde cada detalhe importa e cada decisão deixa marcas permanentes.                    </p>
+                    <p class="creator-bio"><span>Guizo</span> é estudante de informática e escritor independente. <span>Oblitus Limbo</span> nasce da combinação entre narrativa literária e mundos complexos.</p>
                 </div>
             </div>
         </section>
 
         <footer id="invest">
             <div class="footer-cta hover-trigger">Ajude o Projeto</div>
-            <a href="https://www.catarse.me/oblituslimbo?ref=project_link"><button class="btn-invest hover-trigger">Investir</button></a>
-            
-            <div style="position: absolute; bottom: 40px; display: flex; justify-content: space-between; width: 90%; font-size: 0.8rem; color: #555; text-transform: uppercase; letter-spacing: 2px;">
+            <a href="https://www.catarse.me/oblituslimbo"><button class="btn-invest hover-trigger">Investir</button></a>
+            <div style="position: absolute; bottom: 40px; display: flex; justify-content: space-between; width: 90%; font-size: 0.8rem; color: #555;">
                 <span>Guilherme O. Silva &copy; 2026</span>
-                <span>Fantasia Sombria / Horror</span>
+                <span>Fantasia Sombria</span>
             </div>
         </footer>
-
     </main>
 
     <script>
-        // --- CONFIG ---
         gsap.registerPlugin(ScrollTrigger);
         
-        // --- SMOOTH SCROLL (LENIS) ---
-        const lenis = new Lenis({
-            lerp: 0.09, smoothWheel: true,
-        });
+        const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // --- MENU TOGGLE ---
-        const menuTrigger = document.querySelector('.menu-trigger');
-        const navOverlay = document.querySelector('.nav-overlay');
-        const navLinks = document.querySelectorAll('.nav-link');
-        let isMenuOpen = false;
-
-        menuTrigger.addEventListener('click', toggleMenu);
-        navLinks.forEach(link => link.addEventListener('click', toggleMenu));
-
-        function toggleMenu() {
-            isMenuOpen = !isMenuOpen;
-            if(isMenuOpen) {
-                navOverlay.classList.add('active');
-                menuTrigger.innerHTML = 'FECHAR <div class="lines"><span></span><span></span></div>';
-            } else {
-                navOverlay.classList.remove('active');
-                menuTrigger.innerHTML = 'MENU <div class="lines"><span></span><span></span></div>';
-            }
-        }
-
-        // --- HERO ANIMATION ---
-        const tl = gsap.timeline();
-        tl.to(".hero-title span span", {
-            y: 0, duration: 1.8, stagger: 0.2, ease: "power4.out", delay: 0.5
-        })
-        .to(".hero-subtitle", {
-            y: 0, opacity: 1, duration: 1, ease: "power3.out"
-        }, "-=1");
-
-        // --- PARALLAX IMAGE (GENERAL) ---
-        gsap.utils.toArray('[data-speed]').forEach(el => {
-            gsap.to(el, {
-                y: (i, target) => -100 * target.dataset.speed,
-                ease: "none",
-                scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 0 }
-            });
+        // Menu Toggle
+        const menuBtn = document.querySelector('.menu-trigger');
+        const nav = document.querySelector('.nav-overlay');
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            menuBtn.innerHTML = nav.classList.contains('active') ? 'FECHAR' : 'MENU';
         });
 
-        // --- 3D BOOK INTERACTION ---
-        const bookContainer = document.querySelector('.image-reveal');
-        const bookImg = document.querySelector('.book-img');
-
-        if(bookContainer && bookImg) {
-            bookContainer.addEventListener('mousemove', (e) => {
-                const rect = bookContainer.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                // Rotaciona baseado na posição do mouse (Tilt Effect)
-                const rotateX = ((y - centerY) / centerY) * -15; 
-                const rotateY = ((x - centerX) / centerX) * 15;
-
-                gsap.to(bookImg, {
-                    rotateX: rotateX,
-                    rotateY: rotateY,
-                    scale: 1.05,
-                    duration: 0.5,
-                    ease: "power2.out"
-                });
-            });
-
-            bookContainer.addEventListener('mouseleave', () => {
-                 gsap.to(bookImg, {
-                    rotateX: 0,
-                    rotateY: 0,
-                    scale: 1,
-                    duration: 0.8,
-                    ease: "elastic.out(1, 0.3)"
-                });
-            });
-        }
-
-        // --- HORIZONTAL SCROLL ---
-        let charSection = document.querySelector(".section-chars");
-        let charWrapper = document.querySelector(".char-wrapper");
-        
-        gsap.to(charWrapper, {
-            x: () => -(charWrapper.scrollWidth - window.innerWidth),
-            ease: "none",
-            scrollTrigger: {
-                trigger: charSection,
-                pin: true,
-                scrub: 1,
-                end: () => "+=" + charWrapper.scrollWidth
-            }
+        // Animação dos Cards de Personagens (Stagger)
+        gsap.from(".char-card", {
+            y: 100, opacity: 0, duration: 1.2, stagger: 0.2, ease: "power4.out",
+            scrollTrigger: { trigger: ".char-grid", start: "top 80%" }
         });
 
-        // --- TEXT FILL ANIMATION (HIKARI) ---
+        // Text Fill (Hikari)
         gsap.to(".text-fill-anim", {
             backgroundPosition: "0% 0", ease: "none",
-            scrollTrigger: {
-                trigger: ".text-fill-anim", start: "top 80%", end: "bottom 40%", scrub: 1
-            }
+            scrollTrigger: { trigger: ".text-fill-anim", start: "top 80%", end: "bottom 40%", scrub: 1 }
         });
 
-        // --- CREATOR SECTION ANIMATION ---
-        gsap.from(".creator-img-box", {
-            x: -100, opacity: 0, duration: 1.5, ease: "power3.out",
-            scrollTrigger: { trigger: "#creator", start: "top 70%" }
-        });
-        
-        gsap.from(".gs-reveal-creator > *", {
-            y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out",
-            scrollTrigger: { trigger: "#creator", start: "top 70%" }
-        });
-
-        // --- CURSOR VÍVIDO ---
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorCircle = document.querySelector('.cursor-circle');
-        let mouseX = 0, mouseY = 0, circleX = 0, circleY = 0;
-
-        window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-
+        // Cursor
+        const dot = document.querySelector('.cursor-dot');
+        const circle = document.querySelector('.cursor-circle');
+        let mx = 0, my = 0, cx = 0, cy = 0;
+        window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
         gsap.ticker.add(() => {
-            circleX += (mouseX - circleX) * 0.15;
-            circleY += (mouseY - circleY) * 0.15;
-            cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-            cursorCircle.style.transform = `translate(${circleX}px, ${circleY}px) translate(-50%, -50%)`;
+            cx += (mx - cx) * 0.15; cy += (my - cy) * 0.15;
+            dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+            circle.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
         });
 
         document.querySelectorAll('.hover-trigger').forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('hovered'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('hovered'));
         });
-
     </script>
 </body>
 </html>
