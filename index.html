@@ -241,18 +241,30 @@
         }
         .about-text strong { color: var(--platinum); font-weight: 400; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
 
-        /* --- CHARACTERS --- */
+        /* --- CHARACTERS (ATUALIZADO PARA GRID) --- */
         .section-chars {
-            height: 100vh; overflow: hidden; background: #030303;
-            display: flex; align-items: center; border-top: 1px solid #111;
+            padding: 150px 10%; background: #030303;
+            border-top: 1px solid #111;
         }
         
         .char-wrapper {
-            display: flex; gap: 80px; padding-left: 10vw; padding-right: 10vw;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .char-title-container {
+            grid-column: 1 / -1;
+            margin-bottom: 60px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 30px;
         }
 
         .char-card {
-            min-width: 450px; height: 65vh; position: relative;
+            width: 100%; height: 65vh; position: relative;
             display: flex; flex-direction: column; justify-content: flex-end;
             padding: 40px; transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             background: #0a0a0a; overflow: hidden;
@@ -311,7 +323,7 @@
             box-shadow: 0 5px 15px -5px var(--accent);
         }
 
-        /* --- CREATOR SECTION (NOVO) --- */
+        /* --- CREATOR SECTION --- */
         .section-creator {
             padding: 200px 10%;
             background: #020202;
@@ -319,7 +331,6 @@
             overflow: hidden;
             border-top: 1px solid #111;
         }
-        /* Texto decorativo de fundo */
         .section-creator::after {
             content: 'AUTHOR';
             position: absolute;
@@ -349,22 +360,17 @@
         }
         .creator-img-box:hover .creator-img { filter: grayscale(0%) contrast(1.1); transform: scale(1.05); }
 
-        .creator-content {
-            padding-left: 20px;
-        }
-        
+        .creator-content { padding-left: 20px; }
         .creator-title {
             font-family: var(--font-body); font-size: 1rem; color: var(--accent);
             text-transform: uppercase; letter-spacing: 4px; margin-bottom: 20px;
             display: flex; align-items: center; gap: 15px;
         }
         .creator-title::before { content: ''; width: 40px; height: 2px; background: var(--accent); }
-
         .creator-name {
             font-family: var(--font-display); font-size: 5rem; line-height: 0.9;
             color: var(--platinum); font-weight: 900; margin-bottom: 40px;
         }
-
         .creator-bio {
             font-family: var(--font-body); font-size: 1.1rem; line-height: 1.8;
             color: var(--text-muted); max-width: 600px;
@@ -382,7 +388,6 @@
             content: ''; position: absolute; bottom: -20%; left: 50%; transform: translateX(-50%);
             width: 60%; height: 40%; background: var(--accent); filter: blur(150px); opacity: 0.2;
         }
-        
         .footer-cta {
             font-family: var(--font-display); font-size: 9vw; color: transparent;
             -webkit-text-stroke: 2px var(--text-muted); text-transform: uppercase;
@@ -392,7 +397,6 @@
             color: var(--accent); -webkit-text-stroke: 0; 
             text-shadow: 0 0 50px var(--accent-glow), 0 0 20px var(--accent);
         }
-
         .btn-invest {
             margin-top: -30px; padding: 25px 70px;
             background: transparent; border: 2px solid var(--platinum);
@@ -406,152 +410,27 @@
             box-shadow: 0 0 50px var(--accent-glow);
         }
 
+        /* --- MOBILE REFINEMENTS --- */
         @media (max-width: 768px) {
-            .hero-title { font-size: 16vw; }
-            .section-about, .creator-container { grid-template-columns: 1fr; padding: 150px 5%; gap: 50px; }
-            .char-card { min-width: 85vw; height: 60vh; }
-            .hikari-text { font-size: 2.5rem; }
-            .creator-name { font-size: 3rem; }
-            .creator-img-box { height: 400px; }
+            header { padding: 18px 20px; }
+            .logo { font-size: 1.2rem; }
+            .nav-link { font-size: 2.5rem; }
+            .hero-title { font-size: 18vw; }
+            .section-about { grid-template-columns: 1fr; padding: 140px 6%; gap: 60px; }
+            .about-text p { font-size: 1.4rem; }
+            .section-chars { padding: 100px 6%; }
+            .char-card { height: 60vh; }
+            .char-name { font-size: 2.8rem; }
+            .hikari-text { font-size: 2rem; }
+            .creator-container { grid-template-columns: 1fr; gap: 60px; }
+            .creator-name { font-size: 2.8rem; }
+            .footer-cta { font-size: 18vw; }
         }
-        /* ===================== MOBILE FIX REAL ===================== */
-@media (hover: none) and (pointer: coarse) {
-    * {
-        cursor: auto !important;
-    }
 
-    .cursor-dot,
-    .cursor-circle {
-        display: none !important;
-    }
-}
-
-@media (max-width: 768px) {
-
-    /* HEADER */
-    header {
-        padding: 18px 20px;
-    }
-
-    .logo {
-        font-size: 1.2rem;
-        letter-spacing: 2px;
-    }
-
-    .menu-trigger {
-        font-size: 0.8rem;
-        gap: 10px;
-    }
-
-    /* MENU */
-    .nav-link {
-        font-size: 2.5rem;
-        -webkit-text-stroke: 1px var(--text-muted);
-    }
-
-    /* HERO */
-    .hero {
-        padding: 0 6%;
-    }
-
-    .hero-title {
-        font-size: 18vw;
-        line-height: 0.9;
-    }
-
-    .hero-subtitle {
-        font-size: 0.75rem;
-        letter-spacing: 3px;
-        margin-top: 30px;
-    }
-
-    /* ABOUT */
-    .section-about {
-        grid-template-columns: 1fr;
-        padding: 140px 6%;
-        gap: 60px;
-    }
-
-    .about-text p {
-        font-size: 1.4rem;
-        line-height: 1.5;
-    }
-
-    .book-img {
-        width: 100%;
-        max-width: 320px;
-    }
-
-    /* CHARACTERS — DESLIGA HORIZONTAL */
-    .section-chars {
-        height: auto;
-        padding: 120px 6%;
-        overflow: visible;
-    }
-
-    .char-wrapper {
-        flex-direction: column;
-        gap: 50px;
-        padding: 0;
-        transform: none !important;
-    }
-
-    .char-card {
-        min-width: 100%;
-        height: 60vh;
-    }
-
-    /* HIKARI */
-    .section-hikari {
-        padding: 140px 6%;
-    }
-
-    .hikari-text {
-        font-size: 2rem;
-        line-height: 1.4;
-    }
-
-    .hikari-label {
-        font-size: 0.7rem;
-        letter-spacing: 4px;
-    }
-
-    /* CREATOR */
-    .creator-container {
-        grid-template-columns: 1fr;
-        gap: 60px;
-    }
-
-    .creator-img-box {
-        height: 380px;
-    }
-
-    .creator-name {
-        font-size: 2.8rem;
-    }
-
-    .creator-bio {
-        font-size: 1rem;
-        line-height: 1.7;
-    }
-
-    /* FOOTER */
-    footer {
-        height: auto;
-        padding: 140px 6%;
-    }
-
-    .footer-cta {
-        font-size: 18vw;
-        text-align: center;
-    }
-
-    .btn-invest {
-        padding: 18px 40px;
-        font-size: 0.8rem;
-    }
-}
-
+        @media (hover: none) and (pointer: coarse) {
+            * { cursor: auto !important; }
+            .cursor-dot, .cursor-circle { display: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -585,7 +464,6 @@
     <main>
         <section class="hero" id="hero">
             <div class="hero-bg"></div> 
-            
             <h1 class="hero-title">
                 <span class="line"><span class="outline-text">OBLITUS</span></span>
                 <span class="line"><span class="filled-text">LIMBO</span></span>
@@ -618,47 +496,47 @@
             </div>
         </section>
 
-        <div class="horizontal-container" id="chars">
-            <section class="section-chars">
-                <div class="char-wrapper">
-                    <div style="min-width: 350px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid #222; padding-right: 50px;">
-                        <h2 style="font-family: var(--font-display); font-size: 5rem; color: var(--platinum); line-height: 0.8; font-weight: 900;">REGISTRO<br><span style="color: var(--accent); -webkit-text-stroke: 0;">DE ALMAS</span></h2>
-                    </div>
+        <section class="section-chars" id="chars">
+            <div class="char-wrapper">
+                <div class="char-title-container">
+                    <h2 style="font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5rem); color: var(--platinum); line-height: 0.8; font-weight: 900;">
+                        REGISTRO<br><span style="color: var(--accent);">DE ALMAS</span>
+                    </h2>
+                </div>
 
-                    <div class="char-card hover-trigger">
-                        <div class="char-bg-img" style="background-image: url('imgs/Kiana.png');"></div>
-                        <div class="char-info">
-                            <span class="char-role">01 // Protagonista</span>
-                            <h3 class="char-name">KIANA</h3>
-                        </div>
-                    </div>
-
-                    <div class="char-card hover-trigger">
-                        <div class="char-bg-img" style="background-image: url('#');"></div>
-                        <div class="char-info">
-                            <span class="char-role">02 // O Patrulheiro</span>
-                            <h3 class="char-name">AMNON</h3>
-                        </div>
-                    </div>
-
-                    <div class="char-card hover-trigger">
-                         <div class="char-bg-img" style="background-image: url('imgs/Near.png');"></div>
-                        <div class="char-info">
-                            <span class="char-role">03 // O Ladino</span>
-                            <h3 class="char-name">NEAR</h3>
-                        </div>
-                    </div>
-
-                    <div class="char-card hover-trigger">
-                         <div class="char-bg-img" style="background-image: url('imgs/darin.png');"></div>
-                        <div class="char-info">
-                            <span class="char-role">04 // O Druida</span>
-                            <h3 class="char-name">DARIN</h3>
-                        </div>
+                <div class="char-card hover-trigger">
+                    <div class="char-bg-img" style="background-image: url('imgs/Kiana.png');"></div>
+                    <div class="char-info">
+                        <span class="char-role">01 // Protagonista</span>
+                        <h3 class="char-name">KIANA</h3>
                     </div>
                 </div>
-            </section>
-        </div>
+
+                <div class="char-card hover-trigger">
+                    <div class="char-bg-img" style="background-image: url('#');"></div>
+                    <div class="char-info">
+                        <span class="char-role">02 // O Patrulheiro</span>
+                        <h3 class="char-name">AMNON</h3>
+                    </div>
+                </div>
+
+                <div class="char-card hover-trigger">
+                     <div class="char-bg-img" style="background-image: url('imgs/Near.png');"></div>
+                    <div class="char-info">
+                        <span class="char-role">03 // O Ladino</span>
+                        <h3 class="char-name">NEAR</h3>
+                    </div>
+                </div>
+
+                <div class="char-card hover-trigger">
+                     <div class="char-bg-img" style="background-image: url('imgs/darin.png');"></div>
+                    <div class="char-info">
+                        <span class="char-role">04 // O Druida</span>
+                        <h3 class="char-name">DARIN</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="section-hikari" id="hikari">
             <h2 class="hikari-text text-fill-anim">
@@ -677,7 +555,7 @@
                     <h2 class="creator-name">GUILHERME O. SILVA</h2>
                     <p class="creator-bio">
                         <span>Guizo</span> é estudante de informática, programação e eletrônica, além de escritor independente e mestre de RPG. Sua escrita é fortemente influenciada por cinema, jogos narrativos e campanhas de RPG focadas em suspense, mistério e desenvolvimento de personagens.
-<br><span>Oblitus Limbo</span> nasce da combinação entre narrativa literária e a experiência de criação de mundos complexos, onde cada detalhe importa e cada decisão deixa marcas permanentes.                    </p>
+<br><span>Oblitus Limbo</span> nasce da combinação entre narrativa literária e a experiência de criação de mundos complexos, onde cada detalhe importa e cada decisão deixa marcas permanentes. </p>
                 </div>
             </div>
         </section>
@@ -685,27 +563,21 @@
         <footer id="invest">
             <div class="footer-cta hover-trigger">Ajude o Projeto</div>
             <a href="https://www.catarse.me/oblituslimbo?ref=project_link"><button class="btn-invest hover-trigger">Investir</button></a>
-            
             <div style="position: absolute; bottom: 40px; display: flex; justify-content: space-between; width: 90%; font-size: 0.8rem; color: #555; text-transform: uppercase; letter-spacing: 2px;">
                 <span>Guilherme O. Silva &copy; 2026</span>
                 <span>Fantasia Sombria / Horror</span>
             </div>
         </footer>
-
     </main>
 
     <script>
-        // --- CONFIG ---
         gsap.registerPlugin(ScrollTrigger);
         
-        // --- SMOOTH SCROLL (LENIS) ---
-        const lenis = new Lenis({
-            lerp: 0.09, smoothWheel: true,
-        });
+        const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // --- MENU TOGGLE ---
+        // --- MENU ---
         const menuTrigger = document.querySelector('.menu-trigger');
         const navOverlay = document.querySelector('.nav-overlay');
         const navLinks = document.querySelectorAll('.nav-link');
@@ -725,113 +597,59 @@
             }
         }
 
-        // --- HERO ANIMATION ---
+        // --- ANIMATIONS ---
         const tl = gsap.timeline();
-        tl.to(".hero-title span span", {
-            y: 0, duration: 1.8, stagger: 0.2, ease: "power4.out", delay: 0.5
-        })
-        .to(".hero-subtitle", {
-            y: 0, opacity: 1, duration: 1, ease: "power3.out"
-        }, "-=1");
+        tl.to(".hero-title span span", { y: 0, duration: 1.8, stagger: 0.2, ease: "power4.out", delay: 0.5 })
+          .to(".hero-subtitle", { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=1");
 
-        // --- PARALLAX IMAGE (GENERAL) ---
-        gsap.utils.toArray('[data-speed]').forEach(el => {
-            gsap.to(el, {
-                y: (i, target) => -100 * target.dataset.speed,
-                ease: "none",
-                scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 0 }
-            });
-        });
-
-        // --- 3D BOOK INTERACTION ---
+        // --- 3D BOOK ---
         const bookContainer = document.querySelector('.image-reveal');
         const bookImg = document.querySelector('.book-img');
-
         if(bookContainer && bookImg) {
             bookContainer.addEventListener('mousemove', (e) => {
                 const rect = bookContainer.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                // Rotaciona baseado na posição do mouse (Tilt Effect)
-                const rotateX = ((y - centerY) / centerY) * -15; 
-                const rotateY = ((x - centerX) / centerX) * 15;
-
-                gsap.to(bookImg, {
-                    rotateX: rotateX,
-                    rotateY: rotateY,
-                    scale: 1.05,
-                    duration: 0.5,
-                    ease: "power2.out"
-                });
+                const rotateX = ((y - (rect.height / 2)) / (rect.height / 2)) * -15; 
+                const rotateY = ((x - (rect.width / 2)) / (rect.width / 2)) * 15;
+                gsap.to(bookImg, { rotateX, rotateY, scale: 1.05, duration: 0.5, ease: "power2.out" });
             });
-
             bookContainer.addEventListener('mouseleave', () => {
-                 gsap.to(bookImg, {
-                    rotateX: 0,
-                    rotateY: 0,
-                    scale: 1,
-                    duration: 0.8,
-                    ease: "elastic.out(1, 0.3)"
-                });
+                 gsap.to(bookImg, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.8, ease: "elastic.out(1, 0.3)" });
             });
         }
 
-        // --- HORIZONTAL SCROLL ---
-        let charSection = document.querySelector(".section-chars");
-        let charWrapper = document.querySelector(".char-wrapper");
-        
-        gsap.to(charWrapper, {
-            x: () => -(charWrapper.scrollWidth - window.innerWidth),
-            ease: "none",
-            scrollTrigger: {
-                trigger: charSection,
-                pin: true,
-                scrub: 1,
-                end: () => "+=" + charWrapper.scrollWidth
-            }
-        });
-
-        // --- TEXT FILL ANIMATION (HIKARI) ---
+        // --- TEXT FILL (HIKARI) ---
         gsap.to(".text-fill-anim", {
             backgroundPosition: "0% 0", ease: "none",
-            scrollTrigger: {
-                trigger: ".text-fill-anim", start: "top 80%", end: "bottom 40%", scrub: 1
-            }
+            scrollTrigger: { trigger: ".text-fill-anim", start: "top 80%", end: "bottom 40%", scrub: 1 }
         });
 
-        // --- CREATOR SECTION ANIMATION ---
+        // --- CREATOR ---
         gsap.from(".creator-img-box", {
             x: -100, opacity: 0, duration: 1.5, ease: "power3.out",
             scrollTrigger: { trigger: "#creator", start: "top 70%" }
         });
-        
         gsap.from(".gs-reveal-creator > *", {
             y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out",
             scrollTrigger: { trigger: "#creator", start: "top 70%" }
         });
 
-        // --- CURSOR VÍVIDO ---
+        // --- CURSOR ---
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorCircle = document.querySelector('.cursor-circle');
         let mouseX = 0, mouseY = 0, circleX = 0, circleY = 0;
-
         window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-
         gsap.ticker.add(() => {
             circleX += (mouseX - circleX) * 0.15;
             circleY += (mouseY - circleY) * 0.15;
             cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
             cursorCircle.style.transform = `translate(${circleX}px, ${circleY}px) translate(-50%, -50%)`;
         });
-
         document.querySelectorAll('.hover-trigger').forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('hovered'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('hovered'));
         });
-
     </script>
 </body>
 </html>
